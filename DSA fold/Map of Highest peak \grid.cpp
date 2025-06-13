@@ -1,3 +1,4 @@
+//Using grid graph.
 class Solution {
 public:
     vector<vector<int>> highestPeak(vector<vector<int>>& terrain) {
