@@ -1,4 +1,4 @@
-// Graph Type: Undirected Graph represented as an Adjacency List
+// Graph Type: Undirected Graph represented as an Adjacency List 
 class Solution {
 public:
     void buildGraph(const vector<vector<int>>& isConnected, vector<vector<int>>& adjList) {
