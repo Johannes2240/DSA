@@ -1,3 +1,4 @@
+//Implicit graph
 class Solution {
 public:
     int size;    
