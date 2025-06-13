@@ -1,36 +1,35 @@
 class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
-        int m = mat.size();
-        int n = mat[0].size();
-        vector<vector<int>> dist(m, vector<int>(n, INT_MAX));
-        queue<pair<int, int>> q;
-        vector<pair<int, int>> directions = {{-1,0}, {1,0}, {0,-1}, {0,1}};
+        int rows = mat.size();
+        int cols = mat[0].size();
 
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (mat[i][j] == 0) {
-                    dist[i][j] = 0;
-                    q.push({i, j});
+        vector<vector<int>> dist(rows, vector<int>(cols, 1e9));
+
+        // First pass: Top-Left to Bottom-Right
+        for (int r = 0; r < rows; ++r) {
+            for (int c = 0; c < cols; ++c) {
+                if (mat[r][c] == 0) {
+                    dist[r][c] = 0;
+                } else {
+                    if (r > 0)
+                        dist[r][c] = min(dist[r][c], dist[r - 1][c] + 1);
+                    if (c > 0)
+                        dist[r][c] = min(dist[r][c], dist[r][c - 1] + 1);
                 }
             }
         }
-        while (!q.empty()) {
-            auto [x, y] = q.front();
-            q.pop();
 
-            for (auto [dx, dy] : directions) {
-                int newX = x + dx;
-                int newY = y + dy;
-
-                if (newX >= 0 && newX < m && newY >= 0 && newY < n) {
-                    if (dist[newX][newY] > dist[x][y] + 1) {
-                        dist[newX][newY] = dist[x][y] + 1;
-                        q.push({newX, newY});
-                    }
-                }
+        // Second pass: Bottom-Right to Top-Left
+        for (int r = rows - 1; r >= 0; --r) {
+            for (int c = cols - 1; c >= 0; --c) {
+                if (r < rows - 1)
+                    dist[r][c] = min(dist[r][c], dist[r + 1][c] + 1);
+                if (c < cols - 1)
+                    dist[r][c] = min(dist[r][c], dist[r][c + 1] + 1);
             }
         }
+
         return dist;
     }
 };
