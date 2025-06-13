@@ -9,7 +9,6 @@ public:
         int level = 1;
 
         while (!front.empty() && !back.empty()) {
-            // Expand the smaller search front for optimization
             if (front.size() > back.size()) swap(front, back);
 
             unordered_set<string> nextLevel;
