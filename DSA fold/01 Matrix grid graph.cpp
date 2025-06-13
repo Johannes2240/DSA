@@ -5,8 +5,6 @@ public:
         int cols = mat[0].size();
 
         vector<vector<int>> dist(rows, vector<int>(cols, 1e9));
-
-        // First pass: Top-Left to Bottom-Right
         for (int r = 0; r < rows; ++r) {
             for (int c = 0; c < cols; ++c) {
                 if (mat[r][c] == 0) {
@@ -19,8 +17,6 @@ public:
                 }
             }
         }
-
-        // Second pass: Bottom-Right to Top-Left
         for (int r = rows - 1; r >= 0; --r) {
             for (int c = cols - 1; c >= 0; --c) {
                 if (r < rows - 1)
