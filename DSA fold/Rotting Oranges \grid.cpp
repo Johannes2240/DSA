@@ -41,4 +41,3 @@ public:
         return freshCount == 0 ? minutesPassed : -1;
     }
 };
-
