@@ -1,41 +1,35 @@
 class Solution {
 public:
-    vector<vector<int>> highestPeak(vector<vector<int>>& isWater) {
-        int rows = isWater.size();
-        int cols = isWater[0].size();
-        int maxDist = rows + cols;
-        for (int r = 0; r < rows; ++r) {
-            for (int c = 0; c < cols; ++c) {
-                if (isWater[r][c] == 1) {
-                    isWater[r][c] = 0;
-                } else {
-                    isWater[r][c] = maxDist;
+    vector<vector<int>> highestPeak(vector<vector<int>>& terrain) {
+        int height = terrain.size();
+        int width = terrain[0].size();
+        int maxVal = height + width;
+        vector<vector<int>> elevation(height, vector<int>(width, maxVal));
+
+        for (int row = 0; row < height; ++row) {
+            for (int col = 0; col < width; ++col) {
+                if (terrain[row][col] == 1) {
+                    elevation[row][col] = 0;
                 }
             }
         }
-
-        for (int r = 0; r < rows; ++r) {
-            for (int c = 0; c < cols; ++c) {
-                if (isWater[r][c] != 0) {
-                    if (r > 0)
-                        isWater[r][c] = min(isWater[r][c], isWater[r - 1][c] + 1);
-                    if (c > 0)
-                        isWater[r][c] = min(isWater[r][c], isWater[r][c - 1] + 1);
-                }
+        for (int row = 0; row < height; ++row) {
+            for (int col = 0; col < width; ++col) {
+                if (row > 0)
+                    elevation[row][col] = min(elevation[row][col], elevation[row - 1][col] + 1);
+                if (col > 0)
+                    elevation[row][col] = min(elevation[row][col], elevation[row][col - 1] + 1);
+            }
+        }
+        for (int row = height - 1; row >= 0; --row) {
+            for (int col = width - 1; col >= 0; --col) {
+                if (row < height - 1)
+                    elevation[row][col] = min(elevation[row][col], elevation[row + 1][col] + 1);
+                if (col < width - 1)
+                    elevation[row][col] = min(elevation[row][col], elevation[row][col + 1] + 1);
             }
         }
 
-        for (int r = rows - 1; r >= 0; --r) {
-            for (int c = cols - 1; c >= 0; --c) {
-                if (isWater[r][c] != 0) {
-                    if (r < rows - 1)
-                        isWater[r][c] = min(isWater[r][c], isWater[r + 1][c] + 1);
-                    if (c < cols - 1)
-                        isWater[r][c] = min(isWater[r][c], isWater[r][c + 1] + 1);
-                }
-            }
-        }
-
-        return isWater;
+        return elevation;
     }
 };
