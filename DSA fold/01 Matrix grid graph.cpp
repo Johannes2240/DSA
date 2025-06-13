@@ -25,7 +25,6 @@ public:
                     dist[r][c] = min(dist[r][c], dist[r][c + 1] + 1);
             }
         }
-
         return dist;
     }
 };
